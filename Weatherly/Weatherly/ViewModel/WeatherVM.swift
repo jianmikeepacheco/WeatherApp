@@ -9,29 +9,33 @@ import Foundation
 import CoreLocation
 import SwiftUI
 
-final class WeatherVM: ObservableObject {
+final class WeatherVM: ObservableObject, Identifiable {
     
-    //MARK: - PROPERTIES
+//MARK: - PROPERTIES
     
-    let id = UUID()
-    
-    @EnvironmentObject var store: Store
+    @EnvironmentObject var webService: WebService
     
     @Published var weather = WeatherResponse.empty()
+    @EnvironmentObject var store: Store
     
-    @Published var city = Constants.Strings.city {
-        didSet {
+    var id = UUID()
+    
+    //@Published var city = webService.currentPlacemark?.administrativeArea ?? "" {
+    @Published var city = Constants.init().currentLocation {
+    //@Published var city = Constants.init().cityName {
+    //@Published var city = Constants.Location.currentLocation {
+        
+    didSet {
             getLocation()
         }
     }
     
-    //MARK: - GEOCODE
-    
+//MARK: - GET WEATHER BY CITYNAME
+
     init() {
-        getLocation()
-    }
-    
-    
+            getLocation()
+        }
+
     func getLocation() {
         CLGeocoder().geocodeAddressString(city) { (placemarks, error) in
             if let places = placemarks,
@@ -40,9 +44,9 @@ final class WeatherVM: ObservableObject {
             }
         }
     }
-    
+
     func getWeather(coord: CLLocationCoordinate2D?) {
-        
+
         var urlString = ""
         if let coord = coord {
             urlString = weatherAPI.getURLWeather(latitude: coord.latitude, longitude: coord.longitude)
@@ -51,7 +55,7 @@ final class WeatherVM: ObservableObject {
         }
         getWeatherInternal(city: city, for: urlString)
     }
-    
+
     func getWeatherInternal(city: String, for urlString: String) {
         guard let url = URL(string: urlString) else {return}
         NetworkManager<WeatherResponse>.fetchWeather(for: url) { (result) in
@@ -66,7 +70,7 @@ final class WeatherVM: ObservableObject {
         }
     }
     
-    //MARK: - CURRENT
+//MARK: - CURRENT WEATHER
     
     var currentLocation: String {
         return weather.city.name
@@ -103,6 +107,8 @@ final class WeatherVM: ObservableObject {
     var currentRain: String {
         return toString(100*(weather.list.first?.pop ?? 0.0))
     }
+    
+//MARK: - DAILY FORECAST
     
     //MARK: - DAY
     

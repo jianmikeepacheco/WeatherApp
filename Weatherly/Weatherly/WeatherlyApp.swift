@@ -15,8 +15,9 @@ struct WeatherlyApp: App {
         WindowGroup {
             //ContentView()
             HomeScreenView()
+                .environmentObject(WebService())
                 .environmentObject(Store())
-                .environment(\.managedObjectContext, persistenceController.container.viewContext)
+                //.environment(\.managedObjectContext, persistenceController.container.viewContext)
         }
     }
 }

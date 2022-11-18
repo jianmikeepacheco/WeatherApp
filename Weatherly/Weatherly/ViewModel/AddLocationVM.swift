@@ -7,6 +7,7 @@
 
 import Foundation
 
+// Not yet used in the persistence list
 class AddLocationVM: ObservableObject {
     
     var location: String = ""
@@ -34,7 +35,7 @@ class DataStore: ObservableObject {
     
     init() {
         print(FileManager.docDirURL.path)
-        if FileManager().docExist(named: fileName){
+        if FileManager().docExist(named: weatherList){
             loadToDos()
         }
     }
@@ -56,7 +57,7 @@ class DataStore: ObservableObject {
     }
     
     func loadToDos() {
-        FileManager().readDocument(docName: fileName) { (result) in
+        FileManager().readDocument(docName: weatherList) { (result) in
             switch result {
             case .success(let data):
                 let decoder = JSONDecoder()
@@ -77,7 +78,7 @@ class DataStore: ObservableObject {
         do {
             let data = try encoder.encode(loc)
             let jsonString = String(decoding: data, as: UTF8.self)
-            FileManager().saveDocument(contents: jsonString, docName: fileName) { (error) in
+            FileManager().saveDocument(contents: jsonString, docName: weatherList) { (error) in
                 if let error = error {
                     print(error.localizedDescription)
                 }

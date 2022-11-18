@@ -23,7 +23,7 @@ struct LocationList: View {
     // MARK: - BODY
     var body: some View {
         HStack (alignment: .center, spacing: 0) {
-            Text("\(weatherVM.city), \(weatherVM.currentCountry)")
+            Text("\(weatherVM.currentLocation), \(weatherVM.currentCountry)")
                 .font(.headline)
                 .fixedSize()
                 .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
@@ -41,7 +41,7 @@ struct LocationList: View {
             .frame(width: 100, alignment: .topTrailing)
             
         }
-        .padding(.vertical)
+        //.padding(.vertical)
         .foregroundColor(Color("TextColor"))
         .background(RoundedRectangle(cornerRadius: 10)
             .foregroundColor(Color("ThemeColor"))
