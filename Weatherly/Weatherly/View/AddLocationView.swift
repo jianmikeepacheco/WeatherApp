@@ -11,7 +11,10 @@ import CoreData
 struct AddLocationView: View {
     // MARK: - PROPERTY
     
-    @State var startCity = Constants.Strings.city
+    //@State var startCity = Constants.Location.currentLocation
+    //@State var startCity = Constants.init().cityName
+    @State var startCity = Constants.init().currentLocation
+    
     @EnvironmentObject var dataStore: DataStore
     
     @ObservedObject var addLocationVM = AddLocationVM()
@@ -68,11 +71,14 @@ struct AddLocationView: View {
                         ForEach(locationList, id: \.self) { location in
                             NavigationLink {
                                 HomeScreenView()
+                                    .environmentObject(WebService())
                             }
                         label: { LocationList(locationName: location)
                         }.listRowBackground(Color.clear)
                         }
-                    }.listStyle(PlainListStyle()).padding(.horizontal)
+                    }
+                    .listStyle(PlainListStyle())
+                    .padding(.horizontal)
                     
                 }
                 .padding(.horizontal)
@@ -88,7 +94,12 @@ struct AddLocationView: View {
             )
             
             .navigationBarItems(trailing: Button( action: {
-                Constants.Strings.city = startCity
+                //Constants.Location.currentLocation = startCity
+                Constants.init().currentLocation = startCity
+                
+                // ERROR - Cannot assign to property: 'cityName' is a get-only property
+                //Constants.init().cityName = startCity
+                
                 locationList.append(startCity)
                 //updateSaveButton
                 
@@ -113,37 +124,12 @@ struct AddLocationView: View {
     
 }
 
-extension AddLocationView {
-    func updateToDo() {
-        let loc = AddLocation(id: addLocationVM.id!, location: addLocationVM.location)
-        dataStore.updateLocation(loc)
-        presentationMode.wrappedValue.dismiss()
-    }
-    
-    func addToDo() {
-        let loc = AddLocation(location: addLocationVM.location)
-        dataStore.addLocation(loc)
-        presentationMode.wrappedValue.dismiss()
-    }
-    
-    var cancelButton: some View {
-        Button("Cancel") {
-            presentationMode.wrappedValue.dismiss()
-        }
-    }
-    
-    var updateSaveButton: some View {
-        Button( addLocationVM.updating ? "Update" : "Save",
-                action: addLocationVM.updating ? updateToDo : addToDo)
-        .disabled(addLocationVM.isDisabled)
-    }
-}
-
 
 // MARK: - PREVIEW
 struct AddLocationView_Previews: PreviewProvider {
     static var previews: some View {
-        AddLocationView().environmentObject(Store())
+        AddLocationView()
+            .environmentObject(Store())
     }
 }
 

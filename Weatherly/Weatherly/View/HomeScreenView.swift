@@ -6,9 +6,12 @@
 //
 
 import SwiftUI
+import CoreLocation
 
 struct HomeScreenView: View {
     // MARK: - PROPERTY
+    
+    @StateObject var webService = WebService()
     
     @State private var showingSettingsView: Bool = false
     @State private var activeSheet: Sheets?
@@ -19,6 +22,7 @@ struct HomeScreenView: View {
     
     // MARK: - BODY
     var body: some View {
+        
         NavigationView {
             ZStack {
                 VStack (spacing: 20) {
@@ -75,7 +79,9 @@ struct HomeScreenView: View {
             
             .preferredColorScheme(isDarkMode ? .dark : .light)
             
-        }.navigationBarHidden(true)
+        }
+        .navigationBarHidden(true)
+        .onAppear(perform: webService.requestPermission)
     }
     
 }
@@ -83,6 +89,9 @@ struct HomeScreenView: View {
 // MARK: - PREVIEW
 struct HomeScreenView_Previews: PreviewProvider {
     static var previews: some View {
-        HomeScreenView().environmentObject(Store())
+        HomeScreenView()
+            .environmentObject(Store())
+            .environmentObject(WebService())
     }
 }
+

@@ -1,17 +1,12 @@
 //
-//  API.swift
+//  NetworkManager.swift
 //  Weatherly
 //
-//  Created by jian.mikee.pacheco on 9/8/22.
+//  Created by jian.mikee.pacheco on 11/12/22.
 //
 
 import Foundation
-
-struct weatherAPI {
-    static func getURLWeather(latitude: Double, longitude: Double) -> String {
-        return "https://api.openweathermap.org/data/2.5/forecast?lat=\(latitude)&lon=\(longitude)&appid=378be90077518412616838336958f7a9&units=metric"
-    }
-}
+import Network
 
 final class NetworkManager<T: Codable> {
     static func fetchWeather(for url: URL, completion: @escaping (Result<T, NetworkError>) -> Void) {

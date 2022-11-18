@@ -17,7 +17,7 @@ struct CurrentLocation: View {
     // MARK: - BODY
     var body: some View {
         VStack {
-            Text("\(weatherVM.city)") 
+            Text("\(weatherVM.currentLocation)") 
                 .font(.largeTitle)
                 .fontWeight(.heavy)
             

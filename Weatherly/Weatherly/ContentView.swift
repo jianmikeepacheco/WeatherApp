@@ -44,7 +44,8 @@ struct ContentView: View {
                             Label("Add Item", systemImage: "plus")
                         }
                     }
-            }
+                }
+                
                 .background(
                     Image("Background")
                         .resizable()
