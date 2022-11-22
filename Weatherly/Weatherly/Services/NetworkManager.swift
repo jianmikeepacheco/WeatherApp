@@ -34,7 +34,8 @@ final class NetworkManager<T: Codable> {
                 completion(.success(json))
             } catch let err {
                 print(String(describing: err))
-                completion(.failure(.decodingError(err: err.localizedDescription)))
+                //completion(.failure(.decodingError(err: err.localizedDescription)))
+                completion(.failure(.decodingError))
             }
         }.resume()
     }
@@ -43,7 +44,8 @@ final class NetworkManager<T: Codable> {
 enum NetworkError: Error {
     case invalidResponse
     case invalidData
-    case decodingError(err: String)
+    //case decodingError(err: String)
+    case decodingError
     case error(err: String)
 }
 

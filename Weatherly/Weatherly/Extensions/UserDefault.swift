@@ -16,3 +16,4 @@ extension UserDefaults {
         return TemperatureUnit(rawValue: value) ?? .celsius
     }
 }
+

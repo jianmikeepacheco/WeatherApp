@@ -12,7 +12,7 @@ import CoreLocation
 
 // MARK: - GET USER CURRENT LOCATION (2D Coordinates to City Name)
 
-class WebService: NSObject, ObservableObject, CLLocationManagerDelegate {
+final class WebService: NSObject, ObservableObject, CLLocationManagerDelegate {
     @Published var authorizationStatus: CLAuthorizationStatus
     @Published var lastSeenLocation: CLLocation?
     @Published var currentPlacemark: CLPlacemark?

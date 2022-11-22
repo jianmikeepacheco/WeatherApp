@@ -11,11 +11,15 @@ import CoreData
 struct AddLocationView: View {
     // MARK: - PROPERTY
     
+    //Hardcoded city
     //@State var startCity = Constants.Location.currentLocation
-    //@State var startCity = Constants.init().cityName
+    
+    //No forecast showing
     @State var startCity = Constants.init().currentLocation
     
-    @EnvironmentObject var dataStore: DataStore
+    @EnvironmentObject var store: Store
+    
+    //@EnvironmentObject var dataStore: DataStore
     
     @ObservedObject var addLocationVM = AddLocationVM()
     
@@ -72,6 +76,7 @@ struct AddLocationView: View {
                             NavigationLink {
                                 HomeScreenView()
                                     .environmentObject(WebService())
+                                    .environmentObject(Store())
                             }
                         label: { LocationList(locationName: location)
                         }.listRowBackground(Color.clear)
@@ -94,7 +99,10 @@ struct AddLocationView: View {
             )
             
             .navigationBarItems(trailing: Button( action: {
+                //Hardcoded city
                 //Constants.Location.currentLocation = startCity
+                
+                //No forecast showing
                 Constants.init().currentLocation = startCity
                 
                 // ERROR - Cannot assign to property: 'cityName' is a get-only property
@@ -130,6 +138,7 @@ struct AddLocationView_Previews: PreviewProvider {
     static var previews: some View {
         AddLocationView()
             .environmentObject(Store())
+            .environmentObject(WebService())
     }
 }
 

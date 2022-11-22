@@ -11,7 +11,7 @@ import CoreLocation
 struct HomeScreenView: View {
     // MARK: - PROPERTY
     
-    @StateObject var webService = WebService()
+    @EnvironmentObject var webService: WebService
     
     @State private var showingSettingsView: Bool = false
     @State private var activeSheet: Sheets?
