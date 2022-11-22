@@ -10,6 +10,8 @@ import SwiftUI
 struct CurrentLocation: View {
     // MARK: - PROPERTY
     
+    @EnvironmentObject var webService: WebService
+    
     @ObservedObject var weatherVM = WeatherVM()
     
     @AppStorage("isDarkMode") private var isDarkMode = false
@@ -17,7 +19,9 @@ struct CurrentLocation: View {
     // MARK: - BODY
     var body: some View {
         VStack {
-            Text("\(weatherVM.currentLocation)") 
+            //Text("\(weatherVM.currentLocation)")
+            Text("\(webService.currentPlacemark?.administrativeArea ?? "")")
+                .font(.largeTitle)
                 .font(.largeTitle)
                 .fontWeight(.heavy)
             

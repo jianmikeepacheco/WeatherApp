@@ -20,12 +20,12 @@ final class WeatherVM: ObservableObject, Identifiable {
     
     var id = UUID()
     
-    //@Published var city = webService.currentPlacemark?.administrativeArea ?? "" {
+    //No forecast showing
     @Published var city = Constants.init().currentLocation {
-    //@Published var city = Constants.init().cityName {
+
+    //Hardcoded city
     //@Published var city = Constants.Location.currentLocation {
-        
-    didSet {
+        didSet {
             getLocation()
         }
     }
@@ -33,8 +33,8 @@ final class WeatherVM: ObservableObject, Identifiable {
 //MARK: - GET WEATHER BY CITYNAME
 
     init() {
-            getLocation()
-        }
+        getLocation()
+    }
 
     func getLocation() {
         CLGeocoder().geocodeAddressString(city) { (placemarks, error) in
@@ -55,7 +55,7 @@ final class WeatherVM: ObservableObject, Identifiable {
         }
         getWeatherInternal(city: city, for: urlString)
     }
-
+    
     func getWeatherInternal(city: String, for urlString: String) {
         guard let url = URL(string: urlString) else {return}
         NetworkManager<WeatherResponse>.fetchWeather(for: url) { (result) in
@@ -69,6 +69,7 @@ final class WeatherVM: ObservableObject, Identifiable {
             }
         }
     }
+
     
 //MARK: - CURRENT WEATHER
     

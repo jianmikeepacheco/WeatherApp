@@ -9,6 +9,9 @@ import SwiftUI
 
 @main
 struct WeatherlyApp: App {
+    
+    //@StateObject var webService: WebService
+    
     let persistenceController = PersistenceController.shared
 
     var body: some Scene {
